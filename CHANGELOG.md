@@ -14,6 +14,7 @@
 - PLUGINCONSTANT value
 - exclude .vscode from releases
 - updated github workflow versions
+- use shared github workflows
 
 ### Fixed
 - pluginpath constant
