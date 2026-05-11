@@ -15,7 +15,7 @@ function restApiInit() {
         array(
             'methods'               => 'POST,GET',
             'callback'              => __NAMESPACE__.'\findPosts',
-            'permission_callback'   => '__return_true',
+            'permission_callback'   => '__return_true',             // Allow public access
             'args'					=> array(
 				'search'	=> array(
 					'required'	=> true
@@ -30,7 +30,7 @@ function restApiInit() {
         array(
             'methods'               => 'POST,GET',
             'callback'              => __NAMESPACE__.'\showPost',
-            'permission_callback'   => '__return_true',
+            'permission_callback'   => '__return_true',             // Allow public access
             'args'					=> array(
 				'id'	=> array(
 					'required'	=> true
@@ -43,6 +43,13 @@ function restApiInit() {
 	);
 }
 
+/**
+ * Find posts based on a search query
+ * 
+ * @param \WP_REST_Request $wpRequest	The request object or an array of parameters
+ * 
+ * @return array	The list of posts matching the search query
+ */
 function findPosts($wpRequest){
     $search = $wpRequest->get_param('search');
 
@@ -62,6 +69,13 @@ function findPosts($wpRequest){
     return $wpQuery->posts;
 }
 
+/**
+ * Display the contents of a specific page
+ * 
+ * @param \WP_REST_Request $wpRequest	The request object or an array of parameters
+ * 
+ * @return string	The HTML content of the page
+ */
 function showPost($wpRequest){
     $id             = $wpRequest->get_param('id');
     $collapsible    = $wpRequest->get_param('collapsible');
