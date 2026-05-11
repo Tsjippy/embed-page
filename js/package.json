@@ -4,7 +4,9 @@
   "description": "tinymce",
   "main": "./tiny_mce.js",
   "scripts": {
-    "build": "webpack --watch --entry ./tiny_mce.js --output-path . --output-filename tiny_mce.min.js --progress --mode=production --devtool source-map"
+    "build": "webpack --entry ./tiny_mce.js --output-path . --output-filename tiny_mce.min.js --progress --mode=production --devtool source-map",
+    "watch": "webpack --entry ./tiny_mce.js --output-path . --output-filename tiny_mce.min.js --progress --mode=production --devtool source-map",
+    "all": "run-p build"
   },
   "author": "Ewald Harmsen",
   "license": "ISC",
