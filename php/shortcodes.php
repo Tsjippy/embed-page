@@ -39,7 +39,7 @@ function displayPageContents($id, $collapsible=false, $linebreak=false){
                 ?>
                 <span class='small content-embed-toggle'>
                     <span class='underline'>
-                        <a href="<?php the_permalink($post); ?>" title="<?php the_title_attribute(['post' => $post]); ?>"><?php echo get_the_title( $post ); ?></a>
+                        <a href="<?php the_permalink($post); ?>" title="<?php the_title_attribute(['post' => $post]); ?>"><?php echo esc_html(get_the_title( $post )); ?></a>
                         <span class='icon'>
                             ▼
                         </span>
@@ -47,13 +47,13 @@ function displayPageContents($id, $collapsible=false, $linebreak=false){
                 
                     <div class='content-embed hidden'>
                         <?php
-                        echo $content;
+                        echo wp_kses_post($content);
                         ?>
                     </div>
                 </span>
                 <?php
             }else{
-                echo $content;
+                echo wp_kses_post($content);
             }
         }
     // category or archive

@@ -34,7 +34,7 @@ function externalblock($attributes){
 		if(in_array($header["x-frame-options"], ['DENY', 'SAMEORIGIN', 'ALLOW-FROM'])){
 			?>
 			<script>
-				document.addEventListener('mousemove', location.href='<?php echo $url;?>');
+				document.addEventListener('mousemove', location.href='<?php echo esc_url($url);?>');
 			</script>
 			<?php
 			return "Redirection to $url";
