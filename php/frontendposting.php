@@ -15,7 +15,7 @@ function showFullscreen($postContent){
     $url 	= $matches[0][0];
 
     //if the found url is the only post content
-    if($url == strip_tags($postContent)){
+    if($url == wp_strip_all_tags($postContent)){
         //find the post id of the url
         $postId	= url_to_postid($url);
 

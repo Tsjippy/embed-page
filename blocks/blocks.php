@@ -2,6 +2,8 @@
 namespace TSJIPPY\EMBEDPAGE;
 use TSJIPPY;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 add_action('init', __NAMESPACE__.'\blockInit');
 function blockInit() {
 	register_block_type(
