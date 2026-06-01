@@ -2,13 +2,18 @@
 ## [Unreleased] - yyyy-mm-dd
 
 ### Added
-- escaping
 
 ### Changed
 
 ### Fixed
 
 ### Updated
+
+## [10.0.6] - 2026-06-01
+
+
+### Added
+- escaping
 
 ## [10.0.5] - 2026-05-30
 
