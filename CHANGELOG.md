@@ -4,12 +4,19 @@
 ### Added
 
 ### Changed
+
+### Fixed
+
+### Updated
+
+## [10.0.7] - 2026-06-01
+
+
+### Changed
 - merged hooks.md into readme.md
 
 ### Fixed
 - empty url bug
-
-### Updated
 
 ## [10.0.6] - 2026-06-01
 
