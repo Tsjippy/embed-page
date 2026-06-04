@@ -26,7 +26,7 @@ let pageEmbedDialog = {
         text: 'Embed another page',
         onclick: function(){
             // Get page id
-            var pageId	= document.querySelector("[name='page-selector']").value;
+            var pageId    = document.querySelector("[name='page-selector']").value;
 
             // Insert the shortcode at the end
             tinymce.activeEditor.setContent(tinymce.activeEditor.getContent()+`<br>[embed_page id=${pageId}]`);
@@ -47,13 +47,13 @@ tinymce.create(
             editor.addCommand('mceInsert_embed_shortcode',
                 function(){
                     dialog = editor.windowManager.open(pageEmbedDialog);
-                    let select						= document.querySelector('.wp-editor-help [name="page-selector"]');
-					Main.attachNiceSelect(select);
-					let niceSelect 					= select._niceSelect.dropdown
-					niceSelect.style.position		= 'relative';
-					niceSelect.style.width			= "200px";
-					niceSelect.style.border			= '2px solid #303030';
-					niceSelect.style.marginBottom	= '10px';
+                    let select                        = document.querySelector('.wp-editor-help [name="page-selector"]');
+                    Main.attachNiceSelect(select);
+                    let niceSelect                     = select._niceSelect.dropdown
+                    niceSelect.style.position        = 'relative';
+                    niceSelect.style.width            = "200px";
+                    niceSelect.style.border            = '2px solid #303030';
+                    niceSelect.style.marginBottom    = '10px';
                 }
             );
             

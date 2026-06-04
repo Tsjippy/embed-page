@@ -2,26 +2,26 @@
 namespace TSJIPPY\EMBEDPAGE;
 use TSJIPPY;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if ( ! defined('ABSPATH')) {
+    exit;
 }
 
-add_filter('tsjippy_post_content', __NAMESPACE__.'\showFullscreen');
-function showFullscreen($postContent){
+add_filter('tsjippy_post_content', __NAMESPACE__ . '\showFullscreen');
+function showFullscreen($postContent) {
     // Check if content is just an hyperlink
     //find all urls in the page
-    $regex 	= '(?xi)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))';
-    if(preg_match_all("#$regex#i", $postContent, $matches)){
-        $url 	= $matches[0][0];
+    $regex     = '(?xi)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'" .,<>?«»“”‘’]))';
+    if (preg_match_all("#$regex#i", $postContent, $matches)) {
+        $url     = $matches[0][0];
 
         //if the found url is the only post content
-        if($url == wp_strip_all_tags($postContent)){
+        if ($url == wp_strip_all_tags($postContent)) {
             //find the post id of the url
-            $postId	= url_to_postid($url);
+            $postId    = url_to_postid($url);
 
             // If a valid post id
-            if($postId > 0){
-                $postContent	= "[embed_page id='$postId']";
+            if ($postId > 0) {
+                $postContent    = "[embed_page id='$postId']";
             }
         }
     }

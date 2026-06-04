@@ -2,58 +2,58 @@
 namespace TSJIPPY\EMBEDPAGE;
 use TSJIPPY;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if ( ! defined('ABSPATH')) {
+    exit;
 }
 
-add_action( 'rest_api_init', __NAMESPACE__.'\restApiInit');
+add_action('rest_api_init', __NAMESPACE__ . '\restApiInit');
 function restApiInit() {
     // query for posts
-	register_rest_route(
-        RESTAPIPREFIX.'/embedpage',
+    register_rest_route(
+        RESTAPIPREFIX. '/embedpage',
         '/find',
         array(
             'methods'               => 'POST,GET',
-            'callback'              => __NAMESPACE__.'\findPosts',
+            'callback'              => __NAMESPACE__ . '\findPosts',
             'permission_callback'   => '__return_true',             // Allow public access
-            'args'					=> array(
-				'search'	=> array(
-					'required'	=> true
-				),
-			)
-		)
-	);
+            'args'                    => array(
+                'search'    => array(
+                    'required'    => true
+               ),
+           )
+       )
+   );
 
     register_rest_route(
-        RESTAPIPREFIX.'/embedpage',
+        RESTAPIPREFIX. '/embedpage',
         '/result',
         array(
             'methods'               => 'POST,GET',
-            'callback'              => __NAMESPACE__.'\showPost',
+            'callback'              => __NAMESPACE__ . '\showPost',
             'permission_callback'   => '__return_true',             // Allow public access
-            'args'					=> array(
-				'id'	=> array(
-					'required'	=> true
-				),
-                'collapsible'	=> array(
-					'required'	=> true
-				),
-			)
-		)
-	);
+            'args'                    => array(
+                'id'    => array(
+                    'required'    => true
+               ),
+                'collapsible'    => array(
+                    'required'    => true
+               ),
+           )
+       )
+   );
 }
 
 /**
  * Find posts based on a search query
- * 
- * @param \WP_REST_Request $wpRequest	The request object or an array of parameters
- * 
- * @return array	The list of posts matching the search query
+ *
+ * @param \WP_REST_Request $wpRequest    The request object or an array of parameters
+ *
+ * @return array    The list of posts matching the search query
  */
-function findPosts($wpRequest){
+function findPosts($wpRequest) {
     $search = $wpRequest->get_param('search');
 
-    if(strlen($search) < 3){
+    if (strlen($search) < 3) {
         return [];
     }
 
@@ -62,21 +62,21 @@ function findPosts($wpRequest){
         'post_type'         => 'any',
         's'                 => $search,
         'posts_per_page'    => -1
-    );
+   );
 
-    $wpQuery  = new \WP_Query( $args );
+    $wpQuery  = new \WP_Query($args);
 
     return $wpQuery->posts;
 }
 
 /**
  * Display the contents of a specific page
- * 
- * @param \WP_REST_Request $wpRequest	The request object or an array of parameters
- * 
- * @return string	The HTML content of the page
+ *
+ * @param \WP_REST_Request $wpRequest    The request object or an array of parameters
+ *
+ * @return string    The HTML content of the page
  */
-function showPost($wpRequest){
+function showPost($wpRequest) {
     $id             = $wpRequest->get_param('id');
     $collapsible    = $wpRequest->get_param('collapsible');
     $linebreak      = $wpRequest->get_param('linebreak');
