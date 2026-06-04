@@ -1,46 +1,51 @@
 <?php
+
 namespace TSJIPPY\EMBEDPAGE;
+
 use TSJIPPY;
 
-if ( ! defined('ABSPATH')) exit;
+if (! defined('ABSPATH')) exit;
 
 add_action('init', __NAMESPACE__ . '\blockInit');
-function blockInit() {
+function blockInit()
+{
     register_block_type(
         __DIR__ . '/embedPage/build',
         array(
             'render_callback' => __NAMESPACE__ . '\displayEmbedBlock',
-       )
-   );
+        )
+    );
 
     register_block_type(
         __DIR__ . '/embedExternalPage/build',
         array(
             'render_callback' => __NAMESPACE__ . '\externalblock',
-       )
-   );
+        )
+    );
 }
 
-function displayEmbedBlock($attributes) {
+function displayEmbedBlock($attributes)
+{
     $page    = json_decode($attributes['page']);
     if (isset($page->ID)) {
         return displayPageContents($page->ID, $attributes['hide'], $attributes['newline']);
     }
 }
 
-function externalblock($attributes) {
+function externalblock($attributes)
+{
     if (!empty($attributes['url'])) {
         // check if embedable
         $url     = $attributes['url'];
         $header    = get_headers($url, 1);
         if (in_array($header["x-frame-options"], ['DENY', 'SAMEORIGIN', 'ALLOW-FROM'])) {
-            ?>
+?>
             <script>
-                document.addEventListener('mousemove', location.href='<?php echo esc_url($url);?>');
+                document.addEventListener('mousemove', location.href = '<?php echo esc_url($url); ?>');
             </script>
-            <?php
+<?php
             return "Redirection to $url";
-        }else{
+        } else {
             return "<iframe src='$url' sandbox=''></iframe>";
         }
     }

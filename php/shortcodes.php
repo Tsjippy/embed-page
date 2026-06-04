@@ -1,14 +1,17 @@
 <?php
+
 namespace TSJIPPY\EMBEDPAGE;
+
 use TSJIPPY;
 
-if ( ! defined('ABSPATH')) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 // make it possible to include a page in another page
 add_shortcode('embed_page', __NAMESPACE__ . '\embedPost');
-function embedPost($atts) {
+function embedPost($atts)
+{
     if (!is_array($atts) || isset($atts['id']) || !is_numeric($atts['id'])) {
         return '';
     }
@@ -18,7 +21,8 @@ function embedPost($atts) {
     return displayPageContents($id);
 }
 
-function displayPageContents($id, $collapsible=false, $linebreak=false) {
+function displayPageContents($id, $collapsible = false, $linebreak = false)
+{
     global $wp_query;
 
     ob_start();
@@ -27,7 +31,7 @@ function displayPageContents($id, $collapsible=false, $linebreak=false) {
     if (is_numeric($id)) {
         $post       = get_post($id);
 
-        if ( !empty($post)) {
+        if (!empty($post)) {
             $content    = get_the_content(null, false, $post);
             $content    = apply_filters('the_content', $content);
             $content    = str_replace(']]>', ']]&gt;', $content);
@@ -36,7 +40,7 @@ function displayPageContents($id, $collapsible=false, $linebreak=false) {
                 if ($linebreak) {
                     echo '<br>';
                 }
-                ?>
+?>
                 <span class='small content-embed-toggle'>
                     <span class='underline'>
                         <a href="<?php the_permalink($post); ?>" title="<?php the_title_attribute(['post' => $post]); ?>"><?php echo esc_html(get_the_title($post)); ?></a>
@@ -51,26 +55,26 @@ function displayPageContents($id, $collapsible=false, $linebreak=false) {
                         ?>
                     </div>
                 </span>
-                <?php
-            }else{
+<?php
+            } else {
                 echo wp_kses_post($content);
             }
         }
-    // category or archive
-    }elseif (is_array($id)) {
+        // category or archive
+    } elseif (is_array($id)) {
         if (count($id) == 2) {
             $args = array(
                 'post_type' => rtrim($id[0], 's'),
                 'tax_query' => array(
-                    array (
+                    array(
                         'taxonomy' => $id[0],
                         'field' => 'slug',
                         'terms' => $id[1],
-                   )
-               ),
-           );
+                    )
+                ),
+            );
             $type   = 'taxonomy';
-        }else{
+        } else {
             // archive
             $args   = array('taxonomy' => $id[0]);
             $type   = 'archive';

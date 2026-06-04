@@ -3,7 +3,7 @@ import Edit from './edit';
 import metadata from './block.json';
 
 
-registerBlockType( metadata.name, {
+registerBlockType(metadata.name, {
 	icon: 'embed-generic',
 	/**
 	 * @see ./edit.js
@@ -11,4 +11,4 @@ registerBlockType( metadata.name, {
 	edit: Edit,
 
 	save: () => null
-} );
+});

@@ -3,8 +3,8 @@ var dialog;
 /*
     ADD FORM
 */
-let pageEmbedHtml = 
-`<div  class="wp-editor-help">
+let pageEmbedHtml =
+    `<div  class="wp-editor-help">
     <label>
         Select a page to embed
     </label>
@@ -24,51 +24,51 @@ let pageEmbedDialog = {
     },
     buttons: [{
         text: 'Embed another page',
-        onclick: function(){
+        onclick: function () {
             // Get page id
-            var pageId    = document.querySelector("[name='page-selector']").value;
+            var pageId = document.querySelector("[name='page-selector']").value;
 
             // Insert the shortcode at the end
-            tinymce.activeEditor.setContent(tinymce.activeEditor.getContent()+`<br>[embed_page id=${pageId}]`);
-            
+            tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + `<br>[embed_page id=${pageId}]`);
+
             dialog.close();
         }
-    },{
+    }, {
         text: 'Close',
         onclick: 'close'
     }]
-} ;
+};
 
 //select page
 tinymce.create(
     'tinymce.plugins.insert_embed_shortcode',
     {
-        init:function(editor, url){
+        init: function (editor, url) {
             editor.addCommand('mceInsert_embed_shortcode',
-                function(){
+                function () {
                     dialog = editor.windowManager.open(pageEmbedDialog);
-                    let select                        = document.querySelector('.wp-editor-help [name="page-selector"]');
+                    let select = document.querySelector('.wp-editor-help [name="page-selector"]');
                     Main.attachNiceSelect(select);
-                    let niceSelect                     = select._niceSelect.dropdown
-                    niceSelect.style.position        = 'relative';
-                    niceSelect.style.width            = "200px";
-                    niceSelect.style.border            = '2px solid #303030';
-                    niceSelect.style.marginBottom    = '10px';
+                    let niceSelect = select._niceSelect.dropdown
+                    niceSelect.style.position = 'relative';
+                    niceSelect.style.width = "200px";
+                    niceSelect.style.border = '2px solid #303030';
+                    niceSelect.style.marginBottom = '10px';
                 }
             );
-            
+
             editor.addButton('insert_embed_shortcode',
                 {
                     tooltip: 'Embed another page in this page',
-                    title:'Embed another page',
-                    cmd:'mceInsert_embed_shortcode',
-                    image:url+'/../pictures/embed.png'
+                    title: 'Embed another page',
+                    cmd: 'mceInsert_embed_shortcode',
+                    image: url + '/../pictures/embed.png'
                 }
             );
-        
+
         },
-        
-        createControl:function(){
+
+        createControl: function () {
             return null
         },
     }

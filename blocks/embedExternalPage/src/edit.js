@@ -1,40 +1,40 @@
 import { __ } from '@wordpress/i18n';
-import {useBlockProps, InspectorControls} from "@wordpress/block-editor";
-import {useState, useEffect} from "@wordpress/element";
-import {TextControl,PanelBody, Spinner} from "@wordpress/components";
+import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
+import { useState, useEffect } from "@wordpress/element";
+import { TextControl, PanelBody, Spinner } from "@wordpress/components";
 import { useSelect } from '@wordpress/data';
 import { store as coreDataStore } from '@wordpress/core-data';
-import { decodeEntities } from '@wordpress/html-entities';	
+import { decodeEntities } from '@wordpress/html-entities';
 
 
-const Edit = ({attributes, setAttributes}) => {
-	const {url} = attributes;
+const Edit = ({ attributes, setAttributes }) => {
+	const { url } = attributes;
 
-	const [ embededPage, setEmbededPage ]   = useState( <Spinner/> );
+	const [embededPage, setEmbededPage] = useState(<Spinner />);
 
 	useEffect(
 		() => {
-			if(url == ''){
+			if (url == '') {
 				setEmbededPage(
 					<>
-					{ __('Please give an url', 'tsjippy') }
-					{ UrlInput() }
+						{__('Please give an url', 'tsjippy')}
+						{UrlInput()}
 					</>
 				);
-			}else{
-				setEmbededPage(<iframe src={ url }></iframe>);
+			} else {
+				setEmbededPage(<iframe src={url}></iframe>);
 			}
-			
+
 		},
 		[url]
 	);
 
-	const UrlInput	= function(){
+	const UrlInput = function () {
 		return (
 			<TextControl
-				label		= "Page url"
-				value		= { url }
-				onChange	= { (val) => setAttributes({url: val}) }
+				label="Page url"
+				value={url}
+				onChange={(val) => setAttributes({ url: val })}
 			/>
 		);
 	}
@@ -42,13 +42,13 @@ const Edit = ({attributes, setAttributes}) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Page Embed Settings', 'tsjippy' ) }>
+				<PanelBody title={__('Page Embed Settings', 'tsjippy')}>
 					{UrlInput}
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()}>
-				{ embededPage }
-				
+				{embededPage}
+
 			</div>
 		</>
 	);

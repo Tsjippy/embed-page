@@ -1,13 +1,16 @@
 <?php
+
 namespace TSJIPPY\EMBEDPAGE;
+
 use TSJIPPY;
 
-if ( ! defined('ABSPATH')) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 add_filter('tsjippy_post_content', __NAMESPACE__ . '\showFullscreen');
-function showFullscreen($postContent) {
+function showFullscreen($postContent)
+{
     // Check if content is just an hyperlink
     //find all urls in the page
     $regex     = '(?xi)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'" .,<>?«»“”‘’]))';

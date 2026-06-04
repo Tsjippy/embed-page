@@ -1,153 +1,153 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
-import { useState, useEffect} from "@wordpress/element";
-import { SearchControl,PanelBody, Spinner, CheckboxControl } from "@wordpress/components";
+import { useState, useEffect } from "@wordpress/element";
+import { SearchControl, PanelBody, Spinner, CheckboxControl } from "@wordpress/components";
 import { decodeEntities } from '@wordpress/html-entities';
 import apiFetch from "@wordpress/api-fetch";
 
-const Edit = ({attributes, setAttributes}) => {
+const Edit = ({ attributes, setAttributes }) => {
 	const { page, hide, newline, content } = attributes;
 
-	let noPostString	= __('Please select a page...', 'tsjippy');
+	let noPostString = __('Please select a page...', 'tsjippy');
 
 	let initialContent;
 
-	let parsedPage		= {};
+	let parsedPage = {};
 
-	try{
-		parsedPage			= JSON.parse(page);
-	}catch (error) {
+	try {
+		parsedPage = JSON.parse(page);
+	} catch (error) {
 		console.error('not a valid page');
 	}
 
 	console.log(parsedPage.post_content);
 
-	if(parsedPage.post_content == undefined || content == undefined){
-		initialContent	= noPostString;
-	}else{
-		initialContent	= wp.element.RawHTML( { children: parsedPage.post_content } );
+	if (parsedPage.post_content == undefined || content == undefined) {
+		initialContent = noPostString;
+	} else {
+		initialContent = wp.element.RawHTML({ children: parsedPage.post_content });
 	}
 
-	const [ searchTerm, setSearchTerm ]		= useState( '' );
-	const [ pageContent, setPageContent ]   = useState( initialContent );
-	const [ results, setResults ] 			= useState( false );
+	const [searchTerm, setSearchTerm] = useState('');
+	const [pageContent, setPageContent] = useState(initialContent);
+	const [results, setResults] = useState(false);
 
-	const SetContent	= async function(id, collapsible=hide, linebreak=newline){
-	
-		setPageContent(	<Spinner /> );
-	
-		initialContent	= await apiFetch({
-			path: tsjippy.restApiPrefix+'/embedpage/result',
+	const SetContent = async function (id, collapsible = hide, linebreak = newline) {
+
+		setPageContent(<Spinner />);
+
+		initialContent = await apiFetch({
+			path: tsjippy.restApiPrefix + '/embedpage/result',
 			method: 'POST',
-			data: { 
+			data: {
 				id: id,
 				collapsible: collapsible,
 				linebreak: linebreak
 			},
 		});
 
-		if(initialContent.trim() == ''){
+		if (initialContent.trim() == '') {
 			initialContent = "<div class='error'>Empty post</div>";
 		}
 
-		setAttributes({ content: initialContent});
-	
-		setPageContent(wp.element.RawHTML( { children: initialContent }));
+		setAttributes({ content: initialContent });
+
+		setPageContent(wp.element.RawHTML({ children: initialContent }));
 	}
 
-	useEffect( 
+	useEffect(
 		() => {
-			async function getResults(){
-				setResults( false );
+			async function getResults() {
+				setResults(false);
 				const response = await apiFetch({
-					path: tsjippy.restApiPrefix+'/embedpage/find',
+					path: tsjippy.restApiPrefix + '/embedpage/find',
 					method: 'POST',
-					data: { 
+					data: {
 						search: searchTerm
 					},
 				});
-				setResults( response );
+				setResults(response);
 			}
 			getResults();
-		} ,
+		},
 		[searchTerm]
 	);
 
-	const PageSelected	= async function(selected, post){
-		if(selected){
+	const PageSelected = async function (selected, post) {
+		if (selected) {
 			SetContent(post.ID);
-			setAttributes({ page: JSON.stringify(post)});
-		}else{
+			setAttributes({ page: JSON.stringify(post) });
+		} else {
 			setAttributes({ page: null });
-			setPageContent( noPostString );
+			setPageContent(noPostString);
 		}
 	}
 
-	const VisibilityChanged	= async function(checked){
-		setAttributes({ hide: checked});
+	const VisibilityChanged = async function (checked) {
+		setAttributes({ hide: checked });
 
 		SetContent(parsedPage.ID, checked);
 	}
 
-	const LineBreakChanged	= async function(checked){
-		setAttributes({ newline: checked});
+	const LineBreakChanged = async function (checked) {
+		setAttributes({ newline: checked });
 
 		SetContent(parsedPage.ID, hide, checked);
 	}
 
-	const BuildCheckboxControls = function(){
-		if(page == '{}'){
+	const BuildCheckboxControls = function () {
+		if (page == '{}') {
 			return '';
 		}
 
 		return (
 			<>
-			Currently embeded page:
-			<CheckboxControl
-				label		= { decodeEntities( parsedPage.post_title ) }
-				onChange	= { (value) => PageSelected( value, parsedPage ) }
-				checked		= {true}
-			/>
-			<a href={`${tsjippy.baseUrl}/wp-admin/post.php?post=${parsedPage.ID}&action=edit`}>Edit embeded page here</a><br></br><br></br>
+				Currently embeded page:
+				<CheckboxControl
+					label={decodeEntities(parsedPage.post_title)}
+					onChange={(value) => PageSelected(value, parsedPage)}
+					checked={true}
+				/>
+				<a href={`${tsjippy.baseUrl}/wp-admin/post.php?post=${parsedPage.ID}&action=edit`}>Edit embeded page here</a><br></br><br></br>
 			</>
 		)
 	}
 
-	const SearchResults	= function({ pageList }){
-		if ( ! results ) {
-			return(
+	const SearchResults = function ({ pageList }) {
+		if (!results) {
+			return (
 				<>
-				<Spinner />
-				<br></br>
+					<Spinner />
+					<br></br>
 				</>
 			);
 		}
 
-		if ( ! pageList?.length ) {
-			if ( !searchTerm ) {
+		if (!pageList?.length) {
+			if (!searchTerm) {
 				return '';
 			}
 			return <div> {__('No search results', 'tsjippy')}</div>;
 		}
-		
-		return results?.map( ( p ) => {
+
+		return results?.map((p) => {
 			return (
-			<CheckboxControl
-				label		= { decodeEntities( p.post_title )}
-				onChange	= { (value) => PageSelected( value, p ) }
-				checked		= { attributes.page==p}
-			/>)
-		} )
+				<CheckboxControl
+					label={decodeEntities(p.post_title)}
+					onChange={(value) => PageSelected(value, p)}
+					checked={attributes.page == p}
+				/>)
+		})
 	}
 
-	const SearchPage	= (hideIfFound) => {
-		if(pageContent != noPostString && hideIfFound){
+	const SearchPage = (hideIfFound) => {
+		if (pageContent != noPostString && hideIfFound) {
 			return '';
 		}
-		return(
+		return (
 			<>
-				< SearchControl onChange={setSearchTerm} value={ searchTerm } autoFocus={true}/>
-				< SearchResults pageList= {results} />
+				< SearchControl onChange={setSearchTerm} value={searchTerm} autoFocus={true} />
+				< SearchResults pageList={results} />
 			</>
 		)
 	}
@@ -155,26 +155,26 @@ const Edit = ({attributes, setAttributes}) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Page Embed Settings', 'tsjippy' ) }>
+				<PanelBody title={__('Page Embed Settings', 'tsjippy')}>
 					<CheckboxControl
-						label		= { __('Only show contents on hover') }
-						onChange	= { (checked) => VisibilityChanged(checked) }
-						checked		= { hide }
+						label={__('Only show contents on hover')}
+						onChange={(checked) => VisibilityChanged(checked)}
+						checked={hide}
 					/>
 
 					<CheckboxControl
-						label		= { __('Add a line break') }
-						onChange	= { (checked) => LineBreakChanged(checked) }
-						checked		= { newline }
+						label={__('Add a line break')}
+						onChange={(checked) => LineBreakChanged(checked)}
+						checked={newline}
 					/>
 
-					< BuildCheckboxControls  />
+					< BuildCheckboxControls />
 					<i>{__('Use searchbox below to search for a page', 'tsjippy')}</i>
-					{ SearchPage(false) }
+					{SearchPage(false)}
 				</PanelBody>
 			</InspectorControls>
 			<div {...useBlockProps()}>
-				{ SearchPage(true) }
+				{SearchPage(true)}
 				{pageContent}
 			</div>
 		</>

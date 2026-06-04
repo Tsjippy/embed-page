@@ -1,16 +1,19 @@
 <?php
+
 namespace TSJIPPY\EMBEDPAGE;
+
 use TSJIPPY;
 
-if ( ! defined('ABSPATH')) {
+if (! defined('ABSPATH')) {
     exit;
 }
 
 add_action('rest_api_init', __NAMESPACE__ . '\restApiInit');
-function restApiInit() {
+function restApiInit()
+{
     // query for posts
     register_rest_route(
-        RESTAPIPREFIX. '/embedpage',
+        RESTAPIPREFIX . '/embedpage',
         '/find',
         array(
             'methods'               => 'POST,GET',
@@ -19,13 +22,13 @@ function restApiInit() {
             'args'                    => array(
                 'search'    => array(
                     'required'    => true
-               ),
-           )
-       )
-   );
+                ),
+            )
+        )
+    );
 
     register_rest_route(
-        RESTAPIPREFIX. '/embedpage',
+        RESTAPIPREFIX . '/embedpage',
         '/result',
         array(
             'methods'               => 'POST,GET',
@@ -34,13 +37,13 @@ function restApiInit() {
             'args'                    => array(
                 'id'    => array(
                     'required'    => true
-               ),
+                ),
                 'collapsible'    => array(
                     'required'    => true
-               ),
-           )
-       )
-   );
+                ),
+            )
+        )
+    );
 }
 
 /**
@@ -50,7 +53,8 @@ function restApiInit() {
  *
  * @return array    The list of posts matching the search query
  */
-function findPosts($wpRequest) {
+function findPosts($wpRequest)
+{
     $search = $wpRequest->get_param('search');
 
     if (strlen($search) < 3) {
@@ -62,7 +66,7 @@ function findPosts($wpRequest) {
         'post_type'         => 'any',
         's'                 => $search,
         'posts_per_page'    => -1
-   );
+    );
 
     $wpQuery  = new \WP_Query($args);
 
@@ -76,7 +80,8 @@ function findPosts($wpRequest) {
  *
  * @return string    The HTML content of the page
  */
-function showPost($wpRequest) {
+function showPost($wpRequest)
+{
     $id             = $wpRequest->get_param('id');
     $collapsible    = $wpRequest->get_param('collapsible');
     $linebreak      = $wpRequest->get_param('linebreak');
