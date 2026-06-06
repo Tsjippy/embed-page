@@ -13,7 +13,7 @@ function restApiInit()
 {
     // query for posts
     register_rest_route(
-        RESTAPIPREFIX . '/embedpage',
+        TSJIPPY\RESTAPIPREFIX . '/embedpage',
         '/find',
         array(
             'methods'               => 'POST,GET',
@@ -28,7 +28,7 @@ function restApiInit()
     );
 
     register_rest_route(
-        RESTAPIPREFIX . '/embedpage',
+        TSJIPPY\RESTAPIPREFIX . '/embedpage',
         '/result',
         array(
             'methods'               => 'POST,GET',
