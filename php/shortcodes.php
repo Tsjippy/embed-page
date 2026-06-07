@@ -68,8 +68,8 @@ function displayPageContents($id, $collapsible = false, $linebreak = false)
                 'tax_query' => array(
                     array(
                         'taxonomy' => $id[0],
-                        'field' => 'slug',
-                        'terms' => $id[1],
+                        'field'    => 'slug',
+                        'terms'    => $id[1],
                     )
                 ),
             );
@@ -80,8 +80,8 @@ function displayPageContents($id, $collapsible = false, $linebreak = false)
             $type   = 'archive';
         }
 
-        $oldQuery   = $wp_query;
-        $wp_query   = new \WP_Query($args);
+        $oldQuery           = $wp_query;
+        $wp_query           = new \WP_Query($args);
         $wp_query->is_embed = true;
         $template           = TSJIPPY\getTemplateFile('', $type, $id[0]);
 

@@ -65,7 +65,7 @@ function findPosts($wpRequest)
         'post_status'       => 'publish',
         'post_type'         => 'any',
         's'                 => $search,
-        'posts_per_page'    => -1
+        'posts_per_page'    => 1000
     );
 
     $wpQuery  = new \WP_Query($args);
