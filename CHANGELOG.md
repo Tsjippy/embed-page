@@ -7,6 +7,7 @@
 
 ### Fixed
 - shared code loader
+- use correct shortcodes on auto created pages
 
 ### Updated
 
