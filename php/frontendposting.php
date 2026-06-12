@@ -24,7 +24,7 @@ function showFullscreen($postContent)
 
             // If a valid post id
             if ($postId > 0) {
-                $postContent    = "[embed_page id='$postId']";
+                $postContent    = "[tsjippy_embed_page id='$postId']";
             }
         }
     }
