@@ -6,10 +6,15 @@
 ### Changed
 
 ### Fixed
-- shared code loader
-- use correct shortcodes on auto created pages
 
 ### Updated
+
+## [10.1.0] - 2026-06-13
+
+
+### Fixed
+- shared code loader
+- use correct shortcodes on auto created pages
 
 ## [10.0.9] - 2026-06-11
 
