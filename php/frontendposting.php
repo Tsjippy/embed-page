@@ -8,7 +8,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-add_filter('tsjippy-post-content', __NAMESPACE__ . '\showFullscreen');
+add_filter('tsjippy-frontend-content-post-content', __NAMESPACE__ . '\showFullscreen');
 function showFullscreen($postContent)
 {
     // Check if content is just an hyperlink
