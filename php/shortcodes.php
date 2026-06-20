@@ -40,7 +40,7 @@ function displayPageContents($id, $collapsible = false, $linebreak = false)
                 if ($linebreak) {
                     echo '<br>';
                 }
-?>
+                ?>
                 <span class='small content-embed-toggle'>
                     <span class='underline'>
                         <a href="<?php the_permalink($post); ?>" title="<?php the_title_attribute(['post' => $post]); ?>"><?php echo esc_html(get_the_title($post)); ?></a>
@@ -55,7 +55,7 @@ function displayPageContents($id, $collapsible = false, $linebreak = false)
                         ?>
                     </div>
                 </span>
-<?php
+                <?php
             } else {
                 echo wp_kses_post($content);
             }
