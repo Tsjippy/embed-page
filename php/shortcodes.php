@@ -39,7 +39,7 @@ function displayPageContents($id, $collapsible = false, $linebreak = false)
 
             if ($collapsible) {
                 if ($linebreak) {
-                    echo '<br>';
+                    ?><br><?php
                 }
                 ?>
                 <span class='small content-embed-toggle'>
