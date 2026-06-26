@@ -33,6 +33,7 @@ function displayPageContents($id, $collapsible = false, $linebreak = false)
 
         if (!empty($post)) {
             $content    = get_the_content(null, false, $post);
+            // phpcs:ignore
             $content    = apply_filters('the_content', $content);
             $content    = str_replace(']]>', ']]&gt;', $content);
 
