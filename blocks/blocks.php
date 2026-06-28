@@ -38,7 +38,7 @@ function externalblock($attributes)
         // check if embedable
         $url     = $attributes['url'];
         $header    = get_headers($url, 1);
-        if (in_array($header["x-frame-options"], ['DENY', 'SAMEORIGIN', 'ALLOW-FROM'])) {
+        if (isset(['DENY' => 1, 'SAMEORIGIN' => 1, 'ALLOW-FROM' => 1][$header["x-frame-options"]])) {
 ?>
             <script>
                 document.addEventListener('mousemove', location.href = '<?php echo esc_url($url); ?>');
