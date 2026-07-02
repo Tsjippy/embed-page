@@ -9,6 +9,12 @@ if (! defined('ABSPATH')) {
 }
 
 add_filter('tsjippy-frontend-content-post-content', __NAMESPACE__ . '\showFullscreen');
+/**
+ * Show the embed page shortcode if the post content is just a link to another post
+ *
+ * @param    string        $postContent        The post content
+ * @return    string        The modified post content
+ */
 function showFullscreen($postContent)
 {
     // Check if content is just an hyperlink

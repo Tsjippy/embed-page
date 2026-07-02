@@ -9,6 +9,9 @@ if (! defined('ABSPATH')) {
 }
 
 add_action('rest_api_init', __NAMESPACE__ . '\restApiInit');
+/**
+ * Initialize the REST API routes for the embed page
+ */
 function restApiInit()
 {
     // query for posts

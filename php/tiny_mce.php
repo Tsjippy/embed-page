@@ -9,6 +9,9 @@ if (! defined('ABSPATH')) {
 }
 
 add_action('init', __NAMESPACE__ . '\init');
+/**
+ * Initialize the TinyMCE plugin and button for the embed page
+ */
 function init()
 {
     global $wp_scripts;
@@ -25,6 +28,12 @@ function init()
     add_filter('mce_buttons', __NAMESPACE__ . '\addButton', 999);
 }
 
+/**
+ * Add the TinyMCE plugin for the embed page
+ *
+ * @param    array        $plugins        The existing TinyMCE plugins
+ * @return    array        The modified TinyMCE plugins
+ */
 function addPlugin($plugins)
 {
     global $wp_scripts;
@@ -51,6 +60,12 @@ function addPlugin($plugins)
     return $plugins;
 }
 
+/**
+ * Add the TinyMCE button for the embed page
+ *
+ * @param    array        $buttons        The existing TinyMCE buttons
+ * @return    array        The modified TinyMCE buttons
+ */
 function addButton($buttons)
 {
     array_push($buttons, 'insert_embed_shortcode');
